@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Command Center - 1-Click Multi-Image Publisher</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #07090e; color: #f1f5f9; }
+    .heading-font { font-family: 'Space Grotesk', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen py-10 px-4">
+
+  <div class="max-w-2xl mx-auto space-y-6">
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-2xl flex items-center justify-between">
+      <div>
+        <h1 class="heading-font text-lg font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-emerald-400"></i> Store Admin Dashboard
+        </h1>
+        <p class="text-xs text-slate-400 mt-1">Multi-image products publish karein aur brand details update karein</p>
+      </div>
+      <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-2 rounded-xl border border-slate-700 transition">
+        Storefront Dekhein
+      </a>
+    </div>
+
+    <!-- Brand Configuration -->
+    <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 space-y-4">
+      <h2 class="heading-font text-sm font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-tag text-emerald-400"></i> Brand Name & WhatsApp Setting
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Brand Name (Jo marzi rakhein):</label>
+          <input type="text" id="bInput" placeholder="e.g. Apex Sneaker Lab"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Order WhatsApp Number (92xxxxxxxxx):</label>
+          <input type="text" id="wInput" placeholder="923001234567"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400">
+        </div>
+      </div>
+      <button onclick="saveBrandConfig()" class="bg-emerald-400 hover:bg-emerald-300 text-black font-bold px-4 py-2.5 rounded-xl text-xs transition shadow-lg shadow-emerald-400/20">
+        Save Brand Setup
+      </button>
+      <span id="saveNotice" class="text-xs text-emerald-400 font-bold hidden ml-2">Updated Successfully!</span>
+    </div>
+
+    <!-- 1-Click Multi-Image Product Publisher -->
+    <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+      <h2 class="heading-font text-sm font-bold text-white flex items-center gap-2 pb-3 border-b border-slate-800">
+        <i class="fa-solid fa-plus-circle text-emerald-400"></i> Naya Joota Publish Karein (Multiple Photos)
+      </h2>
+
+      <form id="newShoeForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Product Title:</label>
+          <input type="text" id="nTitle" placeholder="e.g. Vintage Leather Court Low" required
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Selling Price (Rs.):</label>
+            <input type="number" id="nPrice" placeholder="3950" required
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Cut-Price / Old Price (Rs.):</label>
+            <input type="number" id="nOldPrice" placeholder="5500" required
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Multiple Photo URLs (Har picture ka link new line mein daalein):</label>
+          <textarea id="nImages" rows="3" required placeholder="https://example.com/side-view.jpg&#10;https://example.com/front-view.jpg&#10;https://example.com/sole-view.jpg"
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400"></textarea>
+          <p class="text-[10px] text-slate-500 mt-1">ImgBB ya PostImages se direct image URLs copy kar ke yahan paste karein.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Sizes (Comma separated):</label>
+            <input type="text" id="nSizes" value="40, 41, 42, 43, 44" required
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Tag / Badge:</label>
+            <input type="text" id="nTag" value="New Drop"
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Specification & Highlight:</label>
+          <textarea id="nHighlight" rows="2" placeholder="Durable gum sole, high comfort memory insole, breathable construction..." required
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-400"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-black font-black py-4 rounded-2xl text-xs transition shadow-xl shadow-emerald-400/20 active:scale-[0.99]">
+          <i class="fa-solid fa-paper-plane mr-1"></i> 1-Click Publish to Live Catalog
+        </button>
+
+        <div id="addSuccess" class="hidden p-3 rounded-xl text-xs font-bold bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 text-center">
+          ✅ Naya joota website par live add ho gaya!
+        </div>
+      </form>
+    </div>
+
+    <!-- Active List -->
+    <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+        <h2 class="heading-font text-sm font-bold text-white">Live Inventory (<span id="countDisplay">0</span>)</h2>
+        <button onclick="restoreSampleData()" class="text-xs text-amber-400 hover:underline">Reset Sample Articles</button>
+      </div>
+      <div id="stockList" class="space-y-3"></div>
+    </div>
+
+  </div>
+
+  <script src="products.js"></script>
+  <script>
+    document.getElementById("bInput").value = getBrandName();
+    document.getElementById("wInput").value = getWhatsAppNumber();
+
+    function saveBrandConfig() {
+      const b = document.getElementById("bInput").value.trim();
+      const w = document.getElementById("wInput").value.trim();
+      if (b) localStorage.setItem("vortex_brand_name", b);
+      if (w) localStorage.setItem("vortex_whatsapp_number", w);
+
+      const notice = document.getElementById("saveNotice");
+      notice.classList.remove("hidden");
+      setTimeout(() => notice.classList.add("hidden"), 2500);
+    }
+
+    function renderStock() {
+      const inv = getInventory();
+      document.getElementById("countDisplay").innerText = inv.length;
+      const list = document.getElementById("stockList");
+
+      list.innerHTML = inv.map((item, idx) => `
+        <div class="flex items-center justify-between p-3.5 bg-slate-950 border border-slate-800 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <img src="${item.images[0]}" class="w-12 h-12 rounded-xl object-cover bg-slate-900">
+            <div>
+              <div class="text-xs font-bold text-white line-clamp-1">${item.title}</div>
+              <div class="text-[11px] text-emerald-400 font-semibold">Rs. ${item.price.toLocaleString()} • ${item.images.length} photos</div>
+            </div>
+          </div>
+          <button onclick="removeItem(${idx})" class="text-red-400 hover:text-red-300 text-xs px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById("newShoeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const title = document.getElementById("nTitle").value.trim();
+      const price = parseInt(document.getElementById("nPrice").value);
+      const comparePrice = parseInt(document.getElementById("nOldPrice").value);
+      const images = document.getElementById("nImages").value.split('\n').map(u => u.trim()).filter(u => u.length > 0);
+      const sizes = document.getElementById("nSizes").value.split(',').map(s => s.trim());
+      const tag = document.getElementById("nTag").value.trim();
+      const highlight = document.getElementById("nHighlight").value.trim();
+
+      const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString().slice(-4);
+
+      const newItem = {
+        id,
+        title,
+        price,
+        comparePrice,
+        category: "Footwear",
+        tag: tag || "New Drop",
+        images: images.length > 0 ? images : ["https://images.unsplash.com/photo-1552346154-21d32810aba3?w=1000"],
+        sizes,
+        highlight
+      };
+
+      const current = getInventory();
+      current.unshift(newItem);
+      localStorage.setItem("vortex_inventory_v2", JSON.stringify(current));
+
+      const success = document.getElementById("addSuccess");
+      success.classList.remove("hidden");
+      setTimeout(() => success.classList.add("hidden"), 3000);
+
+      document.getElementById("newShoeForm").reset();
+      renderStock();
+    });
+
+    function removeItem(index) {
+      if (!confirm("Is jootay ko store se delete karna hai?")) return;
+      const current = getInventory();
+      current.splice(index, 1);
+      localStorage.setItem("vortex_inventory_v2", JSON.stringify(current));
+      renderStock();
+    }
+
+    function restoreSampleData() {
+      if (!confirm("Sample data wapis lana hai?")) return;
+      localStorage.removeItem("vortex_inventory_v2");
+      renderStock();
+    }
+
+    renderStock();
+  </script>
+</body>
+</html>
